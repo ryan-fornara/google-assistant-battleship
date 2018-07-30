@@ -1,4 +1,4 @@
-# Battleship
+# Actions on Google Battleship
 
 This action was created at the GDG New London July 2018 event.
 
