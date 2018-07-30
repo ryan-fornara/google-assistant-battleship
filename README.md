@@ -7,9 +7,9 @@ Battleship Commander for the google assistant was coded in ~6 hours at a GDG New
 Feel free to create a branch to improve this project. Reach out to me and changes made can be published.
 
 Authors:
-Sam Bungar
-Nathaniel Bury
-Ryan Fornara
-Matthew Gillen
-Andrew Rosenberg
+Sam Bungar,
+Nathaniel Bury,
+Ryan Fornara,
+Matthew Gillen,
+Andrew Rosenberg &
 Nathaniel Rowe
