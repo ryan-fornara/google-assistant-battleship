@@ -123,6 +123,17 @@ function createBoard(){
   	return gb;
 }
 
+function checkForWin(gb){
+    for(var i = 0; i<gb.length;i++){
+        for(var j = 0; j<gb[0].length;j++){
+            if(gb[i][j]>0 && gb[i][j]<10){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 function fireTorpedo(gb, row, col, isPlayer) {
   //Convert row letter to number value
   var r;
@@ -322,9 +333,17 @@ function checkSunk(gb,r,row,col,isPlayer){ // search for hit tiles of equivalent
                 break;
           }
           if(isPlayer){
-            return "Hit at " + row.toUpperCase() + (col+1)  + ". You sunk the enemy " + boatType + "!";
+              if(checkForWin(gb)){
+                  return "Hit at " + row.toUpperCase() + (col+1)  + ". You sunk the enemy " + boatType + "! Game over, you are victorious!";
+              }else{
+                  return "Hit at " + row.toUpperCase() + (col+1)  + ". You sunk the enemy " + boatType + "!";
+              }
           }else{
-            return "Hit at " + row.toUpperCase() + (col+1)  + ". The enemy sunk your " + boatType + "!";
+              if(checkForWin(gb)){
+                  return "Hit at " + row.toUpperCase() + (col+1)  + ". The enemy sunk your " + boatType + "! Game over, the enemy wins. Better luck next time";
+              }else{
+                  return "Hit at " + row.toUpperCase() + (col+1)  + ". The enemy sunk your " + boatType + "!";
+              }
           }
         }
       }
@@ -355,7 +374,7 @@ app.intent('actions.intent.MAIN', (conv) => {
   	conv.ask(new SimpleResponse({
 		speech: "Welcome to Battleship Commander. A new eight by eight game board has been generated. Fire a torpedo by indicating your target. For instructions, say, how do I play?",
         // NR: At some point, we should create a method that allows the user to ask for instructions, or enable/disable hit confirmation.
-		text: "Welcome to Battleship Commander. \n You may indicate your target--\'A3, fire\'-- or say \'how do I play\' for instructions."
+		text: "Welcome to Battleship Commander. \n To indicate your target, say \'A3, fire\'. \n Say \'how do I play\' for instructions."
 	}));
   });
 
@@ -389,7 +408,7 @@ app.intent('actions.intent.TEXT', (conv, input) => {
     	{
         conv.ask(new SimpleResponse({
           speech: 'To fire at a target, indicate the letter and number of the grid at which you wish to fire, and then say fire. For example, you might say, B three fire, or F six fire.', //You can toggle fire confirmation by saying, toggle confirmation. To end your game, say quit.
-          text: 'To fire: Letter \+ number \+ \"fire.\" e.g. \"D4, fire.\" \n" Toggle fire confirmation: \"toggle confirmation.\" Confirmation enabled: ' + isConfirmationEnabled + '.',
+          text: 'To fire: letter \+ number \+ \"fire.\" e.g. \"D4, fire.\" \n" Toggle fire confirmation: \"toggle confirmation.\" Confirmation enabled: ' + isConfirmationEnabled + '.',
         }));
       }
     
